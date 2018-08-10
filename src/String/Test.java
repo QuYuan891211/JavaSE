@@ -1,9 +1,13 @@
 package String;
 
+import java.util.Arrays;
+
 public class Test {
     public static void main(String[] a){
-        subStringByChar("a中国abc是",9);
-        test();
+        //subStringByChar("a中国abc是",9);
+        //test();
+        String[] test = {"Bc","Ad","ac","Hello","HA","X man","little","During","day"};
+        sortString(test);
     }
     //1.编写一个字符串截取方法，要求按照字节进行截取，截取一个字节数组形式的字符串，其中包含中英文。如果最后截取到半个中文字符，则舍弃。
     public static byte[] subStringByChar(String inputString,int index){
@@ -101,6 +105,39 @@ public class Test {
         String str89 = "ab";
         System.out.println("str9 = str89 : "+ (str9 == str89));
         //↑str8为常量变量，编译期会被优化
-        //↑------------------------------------------------------over  
+        //↑------------------------------------------------------over
+    }
+    //3.将给定的字符串按照首字母（大写在小写之前）排序，不能使用现有的类
+    public static void sortString(String[] target){
+        for(int i = 0;i<target.length;i++){
+            for(int j = target.length-1;j>i;j--){
+                if(stringCmp(target[j] , target[j-1]) < 0){
+                    String temp = target[j];
+                    target[j] = target[j-1];
+                    target[j-1] = temp;
+                }
+            }
+        }
+        System.out.println(Arrays.toString(target));
+    }
+    public static int stringCmp(String a,String b){
+        char[] a_char = a.toCharArray();
+        char[] b_char = b.toCharArray();
+        int length = Math.min(a_char.length,b_char.length);
+        int finalResult = 0;
+        for(int i = 0;i < length;i++){
+            byte temp1 = (byte)a_char[i];
+            byte temp2 = (byte)b_char[i];
+            int result1 = temp1>96?temp1-96:temp1-64;
+            int result2 = temp2>96?temp2-96:temp2-64;
+            if(result1 != result2) {
+                finalResult = result1 - result2;
+                break;
+            }else {
+                finalResult = a_char[i]-b_char[i];
+                if(finalResult!=0){break;}
+            }
+        }
+        return finalResult;
     }
 }
