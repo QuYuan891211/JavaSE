@@ -1,13 +1,16 @@
 package String;
 
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Array;
 import java.util.Arrays;
 
 public class Test {
-    public static void main(String[] a){
+    public static void main(String[] a) throws UnsupportedEncodingException {
         //subStringByChar("a中国abc是",9);
         //test();
         String[] test = {"Bc","Ad","ac","Hello","HA","X man","little","During","day"};
-        sortString(test);
+        //sortString(test);
+        subString("我打，dd中国gg人",6);
     }
     //1.编写一个字符串截取方法，要求按照字节进行截取，截取一个字节数组形式的字符串，其中包含中英文。如果最后截取到半个中文字符，则舍弃。
     public static byte[] subStringByChar(String inputString,int index){
@@ -139,5 +142,31 @@ public class Test {
             }
         }
         return finalResult;
+    }
+    //4.截取字符串函数，按照字节截取，但中文不能被截取为半个
+    public static String subString(String target,int byteNumber) throws UnsupportedEncodingException {
+        if(byteNumber == 0){return "";}
+        if(byteNumber > target.getBytes().length){return target; }
+        StringBuffer stringBuffer = new StringBuffer();
+        //target = new String(target.getBytes(),"GBK");
+        char[] aa = new char[80];
+        if(byteNumber%2==0){
+            for (int i = 0; i < byteNumber/2;i++){
+                char c  = target.charAt(i);
+                aa[i] = c;
+            }
+        }
+        for(int i=0;i<byteNumber;i++){
+
+        }
+        System.out.println(Arrays.toString(aa));
+
+
+        return "";
+
+    }
+    //判断是否为中文
+    public static boolean isChinese(char a) throws UnsupportedEncodingException {
+        return String.valueOf(a).getBytes("GBK").length>1;
     }
 }
