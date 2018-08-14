@@ -3,6 +3,7 @@ package Reflection;
 import sun.reflect.Reflection;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Scanner;
 
@@ -17,8 +18,9 @@ public class ReflectTest {
 
         Class clazz = Class.forName(name);
         printConstructor(clazz);
+        printField(clazz);
     }
-
+    //获取所以构造器
     public static void printConstructor(Class cl){
         Constructor[] constructors = cl.getDeclaredConstructors();
         for(Constructor c:constructors){
@@ -30,12 +32,24 @@ public class ReflectTest {
             System.out.print(name + "(");
             Class[] paramTypes = c.getParameterTypes();
             for(int i=0;i<paramTypes.length;i++){
-                String paramName = paramTypes[i].getName();
+                String paramName = paramTypes[i].getSimpleName();
                 System.out.print(paramName);
                 if(i <paramTypes.length-1){System.out.print(",");}
             }
             System.out.print(")");
 
+            System.out.println();
+        }
+
+    }
+    //获取所有域
+    public static void printField(Class cl){
+        Field[] fields = cl.getDeclaredFields();
+        for(int i = 0;i<fields.length;i++){
+            String modifier = Modifier.toString(fields[i].getModifiers());
+            System.out.print(modifier + " ");
+            String fieldName =  fields[i].getType().getSimpleName();
+            System.out.print(fieldName + " " + fields[i].getName() + ";");
             System.out.println();
         }
 
