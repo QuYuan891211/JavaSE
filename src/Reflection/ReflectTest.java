@@ -1,17 +1,22 @@
 package Reflection;
 
+import sun.reflect.Reflection;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
 import java.util.Scanner;
 
 //通过反射查询所输入类的信息
 public class ReflectTest {
-    public static void main(String[] a){
+    public static void main(String[] a) throws ClassNotFoundException {
         //输入
         String name;
         Scanner scanner = new Scanner(System.in);
         System.out.println("input class name: e.g. java util Date");
         name = scanner.next();
+
+        Class clazz = Class.forName(name);
+        printConstructor(clazz);
     }
 
     public static void printConstructor(Class cl){
@@ -24,14 +29,14 @@ public class ReflectTest {
             }
             System.out.print(name + "(");
             Class[] paramTypes = c.getParameterTypes();
-            if(paramTypes.length<1){
-                System.out.print(" )");
-            }else {
-                for(Class clazz:paramTypes){
-                    
-                }
+            for(int i=0;i<paramTypes.length;i++){
+                String paramName = paramTypes[i].getName();
+                System.out.print(paramName);
+                if(i <paramTypes.length-1){System.out.print(",");}
             }
+            System.out.print(")");
 
+            System.out.println();
         }
 
     }
