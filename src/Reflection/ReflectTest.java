@@ -4,6 +4,7 @@ import sun.reflect.Reflection;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Scanner;
 
@@ -17,8 +18,13 @@ public class ReflectTest {
         name = scanner.next();
 
         Class clazz = Class.forName(name);
+        String modifier = Modifier.toString(clazz.getModifiers());
+        if(modifier != null && modifier.length()>0){System.out.print(modifier + " ");}
+        System.out.print("class " + clazz.getSimpleName());
+        System.out.println();
         printConstructor(clazz);
         printField(clazz);
+        printMethod(clazz);
     }
     //获取所以构造器
     public static void printConstructor(Class cl){
@@ -50,6 +56,24 @@ public class ReflectTest {
             System.out.print(modifier + " ");
             String fieldName =  fields[i].getType().getSimpleName();
             System.out.print(fieldName + " " + fields[i].getName() + ";");
+            System.out.println();
+        }
+
+    }
+    public static void printMethod(Class cl){
+        Method[] methods = cl.getDeclaredMethods();
+        for(int i=0;i<methods.length;i++){
+            String modifier = Modifier.toString(methods[i].getModifiers());
+            System.out.print(modifier + " ");
+            String clazzName = methods[i].getReturnType().getSimpleName();
+            System.out.print(clazzName + " ");
+            System.out.print(methods[i].getName()+"(");
+            Class[] classes = methods[i].getParameterTypes();
+            for(int j = 0;j<classes.length;j++){
+                System.out.print(classes[j].getSimpleName());
+                if(j<classes.length-1){System.out.print(",");}
+            }
+            System.out.print(");");
             System.out.println();
         }
 
