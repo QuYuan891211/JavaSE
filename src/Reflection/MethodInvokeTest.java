@@ -6,7 +6,7 @@ import java.lang.reflect.Method;
 public class MethodInvokeTest {
 
     public static void main(String[] a){
-        printTable(1,10,10,square);
+        //printTable(1,10,10,square);
     }
     public static double square(double x){
         return x*x;
